@@ -1,7 +1,6 @@
 require 'rake/gempackagetask'
 require 'rake/rdoctask'
 
-
 spec = Gem::Specification.new { |s|
 	s.platform = Gem::Platform::RUBY
 
@@ -23,11 +22,19 @@ spec = Gem::Specification.new { |s|
 	s.version = '0.0.0'
 }
 
+Rake::RDocTask.new(:doc) { |t|
+	t.main = 'doc/README'
+	t.rdoc_files.include 'lib/**/*.rb', 'doc/*', 'bin/*', 'ext/**/*.c', 
+		'ext/**/*.rb'
+	t.options << '-S' << '-N'
+	t.rdoc_dir = 'doc/rdoc'
+}
+
 Rake::GemPackageTask.new(spec) { |pkg|
 	pkg.need_tar_bz2 = true
 }
 
 task(:install => :package) { 
-	g = Dir['pkg/*.gem'].sort.last
+	g = "pkg/#{spec.name}-#{spec.version}.gem"
 	system "sudo gem install -l #{g}"
 }
