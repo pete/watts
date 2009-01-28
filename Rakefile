@@ -1,6 +1,8 @@
 require 'rake/gempackagetask'
 require 'rake/rdoctask'
 
+$: << "#{File.dirname(__FILE__)}/lib"
+
 spec = Gem::Specification.new { |s|
 	s.platform = Gem::Platform::RUBY
 
@@ -37,4 +39,8 @@ Rake::GemPackageTask.new(spec) { |pkg|
 task(:install => :package) { 
 	g = "pkg/#{spec.name}-#{spec.version}.gem"
 	system "sudo gem install -l #{g}"
+}
+
+task(:irb) {
+	exec "irb -Ilib -r#{spec.name}"
 }
