@@ -7,7 +7,7 @@ spec = Gem::Specification.new { |s|
 	s.platform = Gem::Platform::RUBY
 
 	s.author = "Pete Elmore"
-	s.email = "1337p337@gmail.com"
+	s.email = "pete@debu.gs"
 	s.files = Dir["{lib,doc,bin,ext}/**/*"].delete_if {|f| 
 		/\/rdoc(\/|$)/i.match f
 	} + %w(Rakefile)
