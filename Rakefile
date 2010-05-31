@@ -21,7 +21,7 @@ spec = Gem::Specification.new { |s|
 	s.summary =
 		"Another Rack-based web framework.  Yes, another one.  Sorry, guys."
 	s.homepage = "http://debu.gs/#{s.name}"
-	%w().each &s.method(:add_dependency)
+	%w(metaid).each &s.method(:add_dependency)
 	s.version = '0.0.1'
 }
 
