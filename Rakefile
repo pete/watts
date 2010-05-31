@@ -17,11 +17,12 @@ spec = Gem::Specification.new { |s|
 	s.extensions << 'ext/extconf.rb' if File.exist? 'ext/extconf.rb'
 	Dir['bin/*'].map(&File.method(:basename)).map(&s.executables.method(:<<))
 
-	s.name = 'noname'
-	s.summary = "No summary yet."
+	s.name = 'watts'
+	s.summary =
+		"Another Rack-based web framework.  Yes, another one.  Sorry, guys."
 	s.homepage = "http://debu.gs/#{s.name}"
 	%w().each &s.method(:add_dependency)
-	s.version = '0.0.0'
+	s.version = '0.0.1'
 }
 
 Rake::RDocTask.new(:doc) { |t|
