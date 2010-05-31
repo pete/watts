@@ -118,7 +118,7 @@ module Watts
 					end
 				}
 			}
-			define_method(http_method) { |*args| default_http_method[*args] }
+			define_method(http_method) { |*args| default_http_method(*args) }
 		}
 
 		attr_accessor :env, :response
