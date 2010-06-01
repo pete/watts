@@ -45,9 +45,9 @@ module Watts
 	class App
 		Errors = {
 			400 =>
-				[400, {'Content-Type' => 'text/plain'}, "400 Bad Request.\n"],
+				[400, {'Content-Type' => 'text/plain'}, ["400 Bad Request.\n"]],
 			404 =>
-				[404, {'Content-Type' => 'text/plain'}, "404 Not Found\n"],
+				[404, {'Content-Type' => 'text/plain'}, ["404 Not Found\n"]],
 		}
 
 		class << self
@@ -192,11 +192,11 @@ module Watts
 					# TODO:  Problems.
 					case resp
 					when nil
-						[response.status, response.headers, response.body]
+						[response.status, response.headers, [response.body]]
 					when Array
 						resp
 					else
-						[200, {'Content-Type' => 'text/plain'}, resp.to_s]
+						[200, {'Content-Type' => 'text/plain'}, [resp.to_s]]
 					end
 				}
 			}
@@ -264,7 +264,7 @@ module Watts
 
 		def get *args
 			[200, {'Content-Type' => 'text/html'},
-				view_class.new.send(view_method, *args)]
+				[view_class.new.send(view_method, *args)]]
 		end
 	end
 end
