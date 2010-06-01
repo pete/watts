@@ -19,9 +19,7 @@ class Class
 			define_method(attr) {
 				ivval = instance_variable_get(ivname)
 				return ivval if ivval
-				ivval = instance_variable_set(ivname, klass.new)
-				meta_def(attr) { ivval }
-				ivval
+				instance_variable_set(ivname, klass.new)
 			}
 		}
 	end
