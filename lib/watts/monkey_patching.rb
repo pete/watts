@@ -1,3 +1,7 @@
+# This is the place to stuff all of the monkey-patches.
+
+require 'metaid'
+
 class Class
 	# Has instances delegate methods to the class.
 	def to_instance *ms
@@ -15,7 +19,9 @@ class Class
 			define_method(attr) {
 				ivval = instance_variable_get(ivname)
 				return ivval if ivval
-				instance_variable_set(ivname, klass.new)
+				ivval = instance_variable_set(ivname, klass.new)
+				meta_def(attr) { ivval }
+				ivval
 			}
 		}
 	end
