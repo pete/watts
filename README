@@ -1,15 +1,15 @@
-=Watts
+= Watts
 
-==Intro
+== Intro
 Watts is a minimalist, Rack-based, resource-oriented web framework.  It
 has roughly 10% as many lines of code as Sinatra, and it only does one
 thing:  it maps resources.
 
-==Goals
+== Goals
 Dead-simple web development.  I don't want a framework to take up so
 much of my brain that there's no space left for my application.
 
-==Resource Orientation
+== Resource Orientation
 If you think of resources as first-class objects, and then think of HTTP
 methods as operations on those objects, then this should probably make
 sense.
@@ -35,7 +35,7 @@ closely to "skinny controllers".
 
 There are a few easy-to-read examples in doc/examples.
 
-==Pattern-matching
+== Pattern-matching
 That resource() method mentioned above?  It does some pattern-matching
 on the different components of the path.  They all arrive as strings, of
 course.  The priority for matches is that Watts will attempt to match a
@@ -55,7 +55,7 @@ method on the resource when it is called.
 regex, the argument is passed in.  The symbol's actual value doesn't
 really matter to Watts; it is intended for documentation.
 
-==REST, RFC 2616, TL;DR
+== REST, RFC 2616, TL;DR
 There's a lot of talk on the internets about what exactly REST is, why
 it's important, why we're doing it wrong, content-negotiation,
 discoverability, avoiding out-of-band communication, and all of that
@@ -64,20 +64,20 @@ little easier to comply with the spec than Rails or Sinatra if you know
 what the spec says, but it doesn't get all in your face about that stuff
 if you don't care.
 
-==Bugs
+== Bugs
 I'm sure they're present.  You can email me about them, or ping me on
 GitHub, or send a patch.
 
-==About the Name
+== About the Name
 I named it after a character in a video game that I liked as a kid.
 It's also the name of a city not far from where I live.
 
 Also:  one joule per second.
 
-==Author
+== Author
 I wrote it.
 
-==Okay, Seriously.
+== Okay, Seriously.
 Pete Elmore.  Feel free to email me using pete at debu dot gs.  I'm on
 GitHub at http://github.com/pete .  Also there's http://debu.gs/ , which
 I hope to soon rewrite in Watts.
