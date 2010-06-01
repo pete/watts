@@ -1,0 +1,9 @@
+All of the examples are standalone Watts applications, which you can run
+directly.  They could all be pretty easily turned into rackup files.
+
+hello_world.rb is the most basic demonstration.
+matching.rb shows how Watts's pattern-matching works.
+hoshi.rb is a demonstration of the view-wrapping resource.
+
+Although they're all single-file applications, there's nothing that
+prevents you from splitting things up arbitrarily.  It's all just Ruby.
