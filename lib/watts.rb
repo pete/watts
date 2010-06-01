@@ -179,9 +179,11 @@ module Watts
 		HTTPMethods.each { |http_method|
 			meta_def(http_method) { |&b|
 				http_methods << http_method.to_s.upcase
+				bmname = "__#{http_method}".to_sym
+				define_method(bmname, &b)
 				define_method(http_method) { |*args|
 					begin
-						resp = b[*args]
+						resp = send bmname, *args
 					rescue ArgumentError => e
 						# TODO:  Arity/path args mismatch handler here.
 						raise e

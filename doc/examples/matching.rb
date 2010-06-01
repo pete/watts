@@ -21,7 +21,7 @@ class MatchingDemo < Watts::App
 		get { |n| fib(n.to_i).to_s + "\n" }
 
 		# A naive, recursive, slow, text-book implementation of Fibonacci.
-		def self.fib(n)
+		def fib(n)
 			if n < 2
 				1
 			else
