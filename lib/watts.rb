@@ -41,6 +41,13 @@ module Watts
 	end
 
 	class App
+		Errors = {
+			400 =>
+				[400, {'Content-Type' => 'text/plain'}, "400 Bad Request.\n"],
+			404 =>
+				[404, {'Content-Type' => 'text/plain'}, "404 Not Found\n"],
+		}
+
 		class << self
 			attr_new Hash, :http_methods
 			attr_new Watts::Path, :path_map
@@ -81,14 +88,16 @@ module Watts
 
 		def call env, req_path = nil
 			rm = env['REQUEST_METHOD'].downcase.to_sym
+			return(Errors[400]) unless Resource::HTTPMethods.include?(rm)
+
 			req_path ||= decypher_path env['REQUEST_PATH']
 			resource_class, args = match req_path
 
 			if resource_class
 				res = resource_class.new(env)
-				res.http_call(rm, *args)
+				res.send(rm, *args)
 			else
-				[404, {'Content-Type' => 'text/plain'}, "Not found.\n"]
+				Errors[404]
 			end
 		end
 
@@ -105,7 +114,12 @@ module Watts
 			meta_def(http_method) { |&b|
 				http_methods << http_method.to_s.upcase
 				define_method(http_method) { |*args|
-					resp = b[*args]
+					begin
+						resp = b[*args]
+					rescue ArgumentError => e
+						# TODO:  Arity/path args mismatch handler here.
+						raise e
+					end
 
 					# TODO:  Problems.
 					case resp
@@ -121,6 +135,13 @@ module Watts
 			define_method(http_method) { |*args| default_http_method(*args) }
 		}
 
+		def self.for_html_view klass, method
+			c = Class.new HTMLViewResource
+			c.view_class = klass
+			c.view_method = method
+			c
+		end
+
 		attr_accessor :env, :response
 
 		def initialize(env)
@@ -128,17 +149,15 @@ module Watts
 			self.response = Rack::Response.new
 		end
 
-		def http_call(req_method, *args)
-			unless HTTPMethods.include? req_method
-				return default_http_method
-			end
-
-			begin
-				send req_method, *args
-			rescue ArgumentError => e
-				# TODO:  Arity/path args mismatch handler here.
-				raise e
-			end
+		def options(*args)
+			[
+				200,
+				{
+					'Content-Length' => '0', # cf. RFC 2616
+					'Allow' => http_methods.join(', ')
+				},
+				[]
+			]
 		end
 
 		to_instance :http_methods
@@ -147,7 +166,28 @@ module Watts
 		# By default, we return "405 Method Not Allowed" and set the Allow:
 		# header appropriately.
 		def default_http_method(*args)
-			[405, { 'Allow' => http_methods.join(', ') }, '']
+			[405, { 'Allow' => http_methods.join(', ') }, 'Method not allowed.']
+		end
+	end
+
+	class HTMLViewResource < Resource
+		class << self
+			attr_writer :view_class, :view_method
+		end
+
+		def self.view_class
+			@view_class ||= (superclass.view_class rescue nil)
+		end
+
+		def self.view_method
+			@view_method ||= (superclass.view_method rescue nil)
+		end
+
+		to_instance :view_class, :view_method
+
+		def get *args
+			[200, {'Content-Type' => 'text/html'},
+				view_class.new.send(view_method, *args)]
 		end
 	end
 end
