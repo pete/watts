@@ -1,0 +1,54 @@
+=Watts
+
+==Intro
+Watts is a minimalist, Rack-based, resource-oriented web framework.  It
+has roughly 10% as many lines of code as Sinatra, and it only does one
+thing:  it maps resources.
+
+==Goals
+Dead-simple web development.  I don't want a framework to take up so
+much of my brain that there's no space left for my application.
+
+==Resource Orientation
+If you think of resources as first-class objects, and then think of HTTP
+methods as operations on those objects, then this should probably make
+sense.
+
+Most of the web frameworks I have seen seem to be HTTP-method-oriented
+rather than resource-oriented.  It seems odd to me (not to mention
+repetitive) that you would type "A GET on /foo does this, a POST on /foo
+does that, ..." rather than "There's a resource at /foo.  That
+resource's GET does this, and its POST does that, ...".
+
+And because the second one made more sense to me, that's how I wrote
+Watts.  Let me clarify if that was a bit vague, by showing how a Watts
+app comes into being:
+* You make a resource by sub-classing Watts::Resource.  
+* On this resource, you define some basic operations, in terms of HTTP
+methods.
+* You create an app by sub-classing Watts::App.
+* You use the resource() method to tell Watts the path under which the
+resource can be found.
+
+There are a few easy-to-read examples in doc/examples.
+
+==REST, RFC 2616, TL;DR
+There's a lot of talk on the internets about what exactly REST is, why
+it's important, why we're doing it wrong, content-negotiation,
+discoverability, avoiding out-of-band communication, and all of that
+stuff.  Good gravy!  Great chowder, man!  Boring!  Watts makes it a
+little easier to comply with the spec than Rails or Sinatra if you know
+what the spec says, but it doesn't get all in your face about that stuff
+if you don't care.
+
+==Bugs
+I'm sure they're present.  You can email me about them, or ping me on
+GitHub, or send a patch.
+
+==Author
+I wrote it.
+
+==Okay, Seriously.
+Pete Elmore.  Feel free to email me using pete at debu dot gs.  I'm on
+GitHub at http://github.com/pete .  Also there's http://debu.gs/ , which
+I hope to soon rewrite in Watts.
