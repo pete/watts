@@ -30,7 +30,30 @@ methods.
 * You use the resource() method to tell Watts the path under which the
 resource can be found.
 
+You get bonus cookies if it sounded to you like "resources" map pretty
+closely to "skinny controllers".
+
 There are a few easy-to-read examples in doc/examples.
+
+==Pattern-matching
+That resource() method mentioned above?  It does some pattern-matching
+on the different components of the path.  They all arrive as strings, of
+course.  The priority for matches is that Watts will attempt to match a
+string literally if possible.  Next it tries to match any regex patterns
+that have been specified, and failing that, symbols are used as a
+catch-all.  Here are a few patterns and the things they match:
+* '' matches '/'
+* 'foo' matches '/foo'.
+* 'foo/bar' matches '/foo/bar'.
+* [] matches '/'.
+* ['foo'] matches '/foo'.
+* ['foo', 'bar'] matches '/foo/bar'.
+* ['foo', /^[0-9+]$/] matches '/foo/', followed by a string of digits.
+The matching part of the path will be passed as an argument to the
+method on the resource when it is called.
+* ['foo', :arg] matches '/foo/' followed by anything.  Like with the
+regex, the argument is passed in.  The symbol's actual value doesn't
+really matter to Watts; it is intended for documentation.
 
 ==REST, RFC 2616, TL;DR
 There's a lot of talk on the internets about what exactly REST is, why
