@@ -196,7 +196,14 @@ module Watts
 					when Array
 						resp
 					else
-						[200, {'Content-Type' => 'text/plain'}, [resp.to_s]]
+						resp = resp.to_s
+						[
+							200,
+							{'Content-Type' => 'text/plain',
+							 'Content-Length' => resp.length,
+							},
+							[resp]
+						]
 					end
 				}
 			}
