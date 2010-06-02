@@ -263,8 +263,11 @@ module Watts
 		to_instance :view_class, :view_method
 
 		def get *args
-			[200, {'Content-Type' => 'text/html'},
-				[view_class.new.send(view_method, *args)]]
+			body = view_class.new.send(view_method, *args)
+			[200,
+				{'Content-Type' => 'text/html',
+				 'Content-Length' => body.length.to_s},
+			 [body]]
 		end
 	end
 end
