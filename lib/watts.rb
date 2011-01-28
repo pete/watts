@@ -18,7 +18,7 @@ module Watts
 
 		def match path, args
 			if path.empty?
-				[resource, args]
+				[resource, args] if resource
 			elsif(sub = self[path[0]])
 				sub.match(path[1..-1], args)
 			else
@@ -34,6 +34,28 @@ module Watts
 				}
 				nil
 			end
+		end
+
+		def rmatch res, args, acc = []
+			return "/#{acc.join('/')}" if args.empty? && resource == res
+
+			rest = args[1..-1]
+			accnext = acc.dup << args[0]
+
+			each { |k,sub|
+				t = sub.rmatch res, args, [k] + acc
+				return t if t
+
+				if k.kind_of?(Regexp) && k.match(args[0])
+					t = sub.rmatch res, rest, accnext
+					return t if t
+				elsif k.kind_of?(Symbol)
+					t = sub.rmatch res, rest, accnext
+					return t if t
+				end
+			}
+
+			nil
 		end
 
 		def_delegators :sub_paths, :'[]', :'[]=', :each
@@ -60,11 +82,12 @@ module Watts
 		def self.decypher_path p
 			return p if p.kind_of?(Array)
 			return [] if ['/', ''].include?(p)
+			return [p] if p.kind_of?(Regexp)
 			p = p.split('/')
 			p.select { |sub| sub != '' }
 		end
 
-		to_instance :path_map, :decypher_path
+		to_instance :path_map, :decypher_path, :path_to
 
 		# If you want your Watts application to do anything at all, you're very
 		# likely to want to call this method at least once.  The basic purpose
@@ -113,6 +136,12 @@ module Watts
 				self.path_stack = old_stack
 			end
 			res
+		end
+
+		# Given a resource (and, optionally, arguments if the path requires
+		# them), this method returns an absolute path to the resource.
+		def self.path_to res, *args
+			path_map.rmatch res, args
 		end
 
 		# Given a path, returns the matching resource, if any.
@@ -249,7 +278,9 @@ module Watts
 		# By default, we return "405 Method Not Allowed" and set the Allow:
 		# header appropriately.
 		def default_http_method(*args)
-			[405, { 'Allow' => http_methods.join(', ') }, 'Method not allowed.']
+			[405,
+				{ 'Allow' => http_methods.join(', ') },
+				['Method not allowed.']]
 		end
 	end
 
