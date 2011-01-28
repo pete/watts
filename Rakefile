@@ -22,7 +22,7 @@ spec = Gem::Specification.new { |s|
 		"Another Rack-based web framework.  Yes, another one.  Sorry, guys."
 	s.homepage = "http://debu.gs/#{s.name}"
 	%w(metaid).each &s.method(:add_dependency)
-	s.version = '0.0.2'
+	s.version = '0.0.3'
 }
 
 Rake::RDocTask.new(:doc) { |t|
