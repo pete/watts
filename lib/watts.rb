@@ -229,7 +229,7 @@ module Watts
 						[
 							200,
 							{'Content-Type' => 'text/plain',
-							 'Content-Length' => resp.length,
+							 'Content-Length' => resp.bytesize.to_s,
 							},
 							[resp]
 						]
