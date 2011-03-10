@@ -278,8 +278,12 @@ module Watts
 		# By default, we return "405 Method Not Allowed" and set the Allow:
 		# header appropriately.
 		def default_http_method(*args)
+			s = 'Method not allowed.'
 			[405,
-				{ 'Allow' => http_methods.join(', ') },
+				{ 'Allow' => http_methods.join(', '),
+				  'Content-Type' => 'text/plain',
+				  'Content-Length' => s.bytesize.to_s,
+				},
 				['Method not allowed.']]
 		end
 	end
@@ -304,7 +308,7 @@ module Watts
 			body = view_class.new.send(view_method, *args)
 			[200,
 				{'Content-Type' => 'text/html',
-				 'Content-Length' => body.length.to_s},
+				 'Content-Length' => body.bytesize.to_s},
 			 [body]]
 		end
 	end
