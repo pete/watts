@@ -159,6 +159,7 @@ module Watts
 			resource_class, args = match req_path
 
 			if resource_class
+				env = env.merge :watts_app => self
 				res = resource_class.new(env)
 				res.send(rm, *args)
 			else
@@ -253,10 +254,13 @@ module Watts
 
 		to_instance :http_methods
 		attr_new Rack::Response, :response
-		attr_accessor :env, :response
+		attr_accessor :env, :response, :app
 
 		# Every resource, on being instantiated, is given the Rack env.
 		def initialize(env)
+			if app = env.delete(:watts_app)
+				self.app = app
+			end
 			self.env = env
 			self.response = Rack::Response.new
 		end
@@ -273,6 +277,10 @@ module Watts
 				},
 				[]
 			]
+		end
+
+		def request
+			@request ||= Rack::Request.new(env)
 		end
 
 		# By default, we return "405 Method Not Allowed" and set the Allow:
