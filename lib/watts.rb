@@ -155,7 +155,7 @@ module Watts
 			rm = env['REQUEST_METHOD'].downcase.to_sym
 			return(Errors[400]) unless Resource::HTTPMethods.include?(rm)
 
-			req_path ||= decypher_path env['REQUEST_PATH']
+			req_path ||= decypher_path env['PATH_INFO']
 			resource_class, args = match req_path
 
 			if resource_class
