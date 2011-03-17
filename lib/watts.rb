@@ -70,6 +70,9 @@ module Watts
 				[400, {'Content-Type' => 'text/plain'}, ["400 Bad Request.\n"]],
 			404 =>
 				[404, {'Content-Type' => 'text/plain'}, ["404 Not Found\n"]],
+			501 =>
+				[501, {'Content-Type' => 'text/plain'},
+					["501 Not Implemented.\n"]],
 		}
 
 		class << self
@@ -153,7 +156,7 @@ module Watts
 		# Our interaction with Rack.
 		def call env, req_path = nil
 			rm = env['REQUEST_METHOD'].downcase.to_sym
-			return(Errors[400]) unless Resource::HTTPMethods.include?(rm)
+			return(Errors[501]) unless Resource::HTTPMethods.include?(rm)
 
 			req_path ||= decypher_path env['PATH_INFO']
 			resource_class, args = match req_path
