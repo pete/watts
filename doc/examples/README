@@ -1,10 +1,11 @@
 All of the examples are standalone Watts applications, which you can run
-directly.  They could all be pretty easily turned into rackup files.
+directly.  To run them, you can use the command.
+	rackup file.ru
 
-hello_world.rb is the most basic demonstration.
-matching.rb shows how Watts's pattern-matching works.
-hoshi.rb is a demonstration of the view-wrapping resource.
-environment.rb shows what you have to work with in your request.
+* hello_world.ru is the most basic demonstration.
+* matching.ru shows how Watts's pattern-matching works.
+* hoshi.ru is a demonstration of the view-wrapping resource.
+* environment.ru shows what you have to work with in your request.
 
 Although they're all single-file applications, there's nothing that
 prevents you from splitting things up arbitrarily.  It's all just Ruby.
