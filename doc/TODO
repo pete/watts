@@ -1,0 +1,2 @@
+Perhaps use Rack::URLMap where applicable (and transparent) to speed things up,
+provided it doesn't preclude things like changing the app on the fly.
