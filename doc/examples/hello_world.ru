@@ -14,5 +14,4 @@ end
 
 app = Simple.new
 builder = Rack::Builder.new { run app }
-
-Rack::Handler::Mongrel.run builder, :Port => 8080
+run builder
