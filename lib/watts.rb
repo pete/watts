@@ -211,7 +211,7 @@ module Watts
 		# def methods, as seen below for the options method.
 		HTTPMethods.each { |http_method|
 			meta_def(http_method) { |&b|
-				http_methods << http_method.to_s.upcase
+				(http_methods << http_method.to_s.upcase).uniq!
 				bmname = "__#{http_method}".to_sym
 				define_method(bmname, &b)
 				define_method(http_method) { |*args|
@@ -253,6 +253,16 @@ module Watts
 			c.view_class = klass
 			c.view_method = method
 			c
+		end
+
+		# This method generates a HEAD that just calls #get and only passes
+		# back the headers.  It's sub-optimal when GET is expensive, so it is
+		# disabled by default.
+		def self.auto_head
+			head { |*a|
+				status, headers, = get(*a)
+				[status, headers, []]
+			}
 		end
 
 		to_instance :http_methods
