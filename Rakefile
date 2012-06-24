@@ -1,5 +1,5 @@
 require 'rake/gempackagetask'
-require 'rake/rdoctask'
+require 'rdoc/task'
 
 $: << "#{File.dirname(__FILE__)}/lib"
 
