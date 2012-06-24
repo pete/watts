@@ -54,5 +54,6 @@ task(:irb) {
 
 desc "Runs tests."
 task(:test) {
-	system "ruby -Ilib test/*_test.rb"
+	tests = Dir['test/*_test.rb'].map { |t| "-r#{t}" }
+	system 'ruby', '-Ilib', '-I.', *tests, '-e', ''
 }
