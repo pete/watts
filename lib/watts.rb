@@ -307,6 +307,14 @@ module Watts
 				},
 				['Method not allowed.']]
 		end
+
+		# HEAD responds the same way as the default_method, but does not return
+		# a body.
+		def head(*args)
+			r = default_http_method
+			r[2] = []
+			r
+		end
 	end
 
 	# See the documentation for Watts::Resource.for_html_view().
