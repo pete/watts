@@ -22,7 +22,7 @@ spec = Gem::Specification.new { |s|
 		"Resource-oriented, Rack-based, minimalist web framework."
 	s.homepage = "http://debu.gs/#{s.name}"
 	%w(metaid).each &s.method(:add_dependency)
-	s.version = '1.0.0'
+	s.version = '1.0.1'
 }
 
 Rake::RDocTask.new(:doc) { |t|
