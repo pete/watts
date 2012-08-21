@@ -43,7 +43,7 @@ module Watts
 			accnext = acc.dup << args[0]
 
 			each { |k,sub|
-				t = sub.rmatch res, args, [k] + acc
+				t = sub.rmatch res, args, acc + [k]
 				return t if t
 
 				if k.kind_of?(Regexp) && k.match(args[0])
