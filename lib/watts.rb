@@ -286,6 +286,7 @@ module Watts
 				200,
 				{
 					'Content-Length' => '0', # cf. RFC 2616
+					'Content-Type' => 'text/plain', # Appease Rack::Lint
 					'Allow' => http_methods.join(', ')
 				},
 				[]
