@@ -33,6 +33,8 @@ class RouteTest < Test::Unit::TestCase
 		assert_equal '/one/2/three', app.path_to(r3, '2', 'three')
 		assert_equal '/one/2/3three3', app.path_to(r3, '2', '3three3')
 		assert_equal '/one/2/3three/4', app.path_to(r4, '2', '3three')
+
+		assert_equal nil, app.path_to(r3)
 		assert_equal nil, app.path_to(r3, '2', '3')
 	end
 end

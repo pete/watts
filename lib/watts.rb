@@ -1,6 +1,5 @@
 %w(
 	forwardable
-	metaid
 	rack
 	watts/monkey_patching
 ).each &method(:require)
@@ -39,14 +38,14 @@ module Watts
 		def rmatch res, args, acc = []
 			return "/#{acc.join('/')}" if args.empty? && resource == res
 
-			rest = args[1..-1]
+			rest = args[1..-1] || []
 			accnext = acc.dup << args[0]
 
 			each { |k,sub|
-				t = sub.rmatch res, args, acc + [k]
-				return t if t
-
-				if k.kind_of?(Regexp) && k.match(args[0])
+				if k.kind_of?(String)
+					t = sub.rmatch res, args, acc + [k]
+					return t if t
+				elsif k.kind_of?(Regexp) && k.match(args[0])
 					t = sub.rmatch res, rest, accnext
 					return t if t
 				elsif k.kind_of?(Symbol)
@@ -210,7 +209,7 @@ module Watts
 		# response, and a method for generating a method.  You may also just
 		# def methods, as seen below for the options method.
 		HTTPMethods.each { |http_method|
-			meta_def(http_method) { |&b|
+			define_singleton_method(http_method) { |&b|
 				(http_methods << http_method.to_s.upcase).uniq!
 				bmname = "__#{http_method}".to_sym
 				define_method(bmname, &b)

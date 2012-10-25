@@ -25,6 +25,5 @@ class MethodsTest < Test::Unit::TestCase
 		rs = Class.new(r)
 		r.get { }
 		resp = r.new({}).options
-		$stderr.puts resp.inspect
 	end
 end

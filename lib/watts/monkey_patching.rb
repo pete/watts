@@ -1,7 +1,5 @@
 # This is the place to stuff all of the monkey-patches.
 
-require 'metaid'
-
 class Class
 	# Has instances delegate methods to the class.
 	def to_instance *ms
