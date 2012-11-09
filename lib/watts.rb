@@ -211,7 +211,7 @@ module Watts
 		HTTPMethods.each { |http_method|
 			define_singleton_method(http_method) { |&b|
 				(http_methods << http_method.to_s.upcase).uniq!
-				bmname = "__#{http_method}".to_sym
+				bmname = :"__#{http_method}"
 				define_method(bmname, &b)
 				define_method(http_method) { |*args|
 					begin
