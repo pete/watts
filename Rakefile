@@ -1,4 +1,4 @@
-require 'rake/gempackagetask'
+require 'rubygems/package_task'
 require 'rdoc/task'
 
 $: << "#{File.dirname(__FILE__)}/lib"
@@ -20,9 +20,9 @@ spec = Gem::Specification.new { |s|
 	s.name = 'watts'
 	s.summary =
 		"Resource-oriented, Rack-based, minimalist web framework."
-	s.homepage = "http://debu.gs/#{s.name}"
+	s.homepage = "http://github.com/pete/watts"
 	%w().each &s.method(:add_dependency)
-	s.version = '1.0.3'
+	s.version = '1.0.4'
 }
 
 Rake::RDocTask.new(:doc) { |t|
@@ -33,7 +33,7 @@ Rake::RDocTask.new(:doc) { |t|
 	t.rdoc_dir = 'doc/rdoc'
 }
 
-Rake::GemPackageTask.new(spec) { |pkg|
+Gem::PackageTask.new(spec) { |pkg|
 	pkg.need_tar_bz2 = true
 }
 desc "Cleans out the packaged files."

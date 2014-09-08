@@ -139,6 +139,8 @@ module Watts
 			end
 			res
 		end
+		# And because res(...) is a little less distracting than resource(...):
+		class << self; alias_method :res, :resource; end
 
 		# Given a resource (and, optionally, arguments if the path requires
 		# them), this method returns an absolute path to the resource.
