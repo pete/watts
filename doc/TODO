@@ -1,2 +1,7 @@
 Perhaps use Rack::URLMap where applicable (and transparent) to speed things up,
 provided it doesn't preclude things like changing the app on the fly.
+
+Tweaks to make inheritance behave better.
+
+Hooks?  I keep running into places where I'd like to have them, but a clean way
+to do this is not yet obvious.
