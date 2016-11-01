@@ -18,11 +18,12 @@ spec = Gem::Specification.new { |s|
 	Dir['bin/*'].map(&File.method(:basename)).map(&s.executables.method(:<<))
 
 	s.name = 'watts'
+	s.license = 'MIT'
 	s.summary =
 		"Resource-oriented, Rack-based, minimalist web framework."
 	s.homepage = "http://github.com/pete/watts"
-	%w().each &s.method(:add_dependency)
-	s.version = '1.0.4'
+	%w(rack).each &s.method(:add_dependency)
+	s.version = '1.0.5'
 }
 
 Rake::RDocTask.new(:doc) { |t|

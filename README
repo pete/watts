@@ -2,8 +2,8 @@
 
 == Intro
 Watts is a minimalist, Rack-based, resource-oriented web framework.  It
-has fewer than 400 lines of code (including comments), no dependencies,
-and only does one thing: it maps resources.
+has fewer than 400 lines of code (including comments), no dependencies
+(besides Rack), and only does one thing: it maps resources.
 
 == Goals
 Dead-simple web development.  I don't want a framework to take up so
