@@ -74,11 +74,18 @@ module Watts
 				[501, {'Content-Type' => 'text/plain'},
 					["501 Not Implemented.\n"]],
 		}
+
+		# The "empty" set.
 		ESet = Set.new(['/', ''])
+
+		# Method name cache.  Maps HTTP methods to object methods.
 		MNCache = Hash.new { |h,k|
 			h[k] = k.downcase.to_sym
 		}
-		%w(GET PUT POST DELETE OPTIONS HEAD).each &MNCache.method(:'[]')
+		# Prefill MNCache above with the likely culprits:
+		%w(
+			GET PUT POST DELETE OPTIONS HEAD TRACE CONNECT PATCH
+		).each &MNCache.method(:'[]')
 
 		class << self
 			attr_new Hash, :http_methods
