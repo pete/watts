@@ -7,10 +7,7 @@ class AppTest < Test::Unit::TestCase
 			resp = mkreq "/#{path}"
 			assert_equal 200, resp.status,
 				"Expect 200 OK from /#{path}"
-			# This test would have been that shorter, but Rack::MockResponse
-			# gives a string, where Rack::Response gives an Enumerable.  Ouch.
-			body = resp.body.kind_of?(String) ? resp.body : resp.body.join
-			assert_equal 'test', body,
+			assert_equal 'test', resp.body,
 				"Expect the appropriate body from /#{path}"
 		}
 	end
@@ -21,6 +18,26 @@ class AppTest < Test::Unit::TestCase
 			"Expect that responses to bad methods comply with RFC2616."
 	end
 
+	def test_404
+		resp = mkreq "/notfound"
+		assert_equal 404, resp.status,
+			"Expect to not find /notfound."
+	end
+
+	def test_request
+		resp = mkreq '/method'
+		assert_equal 'GET', resp.body,
+			"Expected the request method in the body."
+	end
+
+	def test_resource_args
+		# This behavior may or may not be desirable.  It is unfortunate that the
+		# pattern-matching and the arity of the methods can't line up completely.
+		assert_raise_kind_of(ArgumentError) {
+			resp = mkreq "/arity/mismatch"
+		}
+	end
+
 	def app
 		@app ||= begin
 			gr = method(:getres) # Scoping!
@@ -28,6 +45,9 @@ class AppTest < Test::Unit::TestCase
 				res('str', gr.call { 'test' })
 				res('resp', gr.call { response.body << 'test';nil })
 				res('arr', gr.call { [200, {}, ['test']] })
+
+				res(['arity', :mismatch], gr.call { || 'test' })
+				res('method', gr.call { request.env['REQUEST_METHOD'] })
 			}.new
 		end
 	end
