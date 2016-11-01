@@ -225,14 +225,16 @@ module Watts
 						resp = send bmname, *args
 					rescue ArgumentError => e
 						# TODO:  Arity/path args mismatch handler here.
+						# ...Maybe.  It seems appropriate, but I've never
+						# needed it.
 						raise e
 					end
 
 					# TODO:  Problems.
 					case resp
 					when nil
-						[response.status, response.headers, [response.body]]
-					when Array
+						response
+					when Array, Rack::Response
 						resp
 					else
 						resp = resp.to_s
@@ -273,7 +275,7 @@ module Watts
 
 		to_instance :http_methods
 		attr_new Rack::Response, :response
-		attr_accessor :env, :response, :app
+		attr_accessor :env, :app
 
 		# Every resource, on being instantiated, is given the Rack env.
 		def initialize(env)
