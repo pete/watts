@@ -9,9 +9,9 @@ class RouteTest < Test::Unit::TestCase
 		r4 = Class.new(Watts::Resource)
 
 		app = Class.new(Watts::App) {
-			resource('/', r1) {
-				resource(['one', :two], r2) {
-					resource(/three/, r3) { resource('4', r4) }
+			res('/', r1) {
+				res(['one', :two], r2) {
+					res(/three/, r3) { resource('4', r4) }
 				}
 			}
 		}.new

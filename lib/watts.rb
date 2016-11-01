@@ -1,6 +1,7 @@
 %w(
 	forwardable
 	rack
+	set
 	watts/monkey_patching
 ).each &method(:require)
 
@@ -73,6 +74,11 @@ module Watts
 				[501, {'Content-Type' => 'text/plain'},
 					["501 Not Implemented.\n"]],
 		}
+		ESet = Set.new(['/', ''])
+		MNCache = Hash.new { |h,k|
+			h[k] = k.downcase.to_sym
+		}
+		%w(GET PUT POST DELETE OPTIONS HEAD).each &MNCache.method(:'[]')
 
 		class << self
 			attr_new Hash, :http_methods
@@ -83,11 +89,10 @@ module Watts
 
 		def self.decypher_path p
 			return p if p.kind_of?(Array)
-			return [] if ['/', ''].include?(p)
+			return [] if ESet.include?(p)
 			return [p] if p.kind_of?(Regexp)
-			p = p.split('/')
-			p.select { |sub| sub != '' }
-		end
+			p.split('/').tap { |a| a.reject!(&''.method(:'==')) }
+ 		end
 
 		to_instance :path_map, :decypher_path, :path_to
 
@@ -156,15 +161,15 @@ module Watts
 
 		# Our interaction with Rack.
 		def call env, req_path = nil
-			rm = env['REQUEST_METHOD'].downcase.to_sym
+			rm = MNCache[env['REQUEST_METHOD']]
 			return(Errors[501]) unless Resource::HTTPMethods.include?(rm)
 
 			req_path ||= decypher_path env['PATH_INFO']
-			resource_class, args = match req_path
+			resource_class, args = path_map.match req_path, []
 
 			if resource_class
-				env = env.merge :watts_app => self
-				res = resource_class.new(env)
+				env[:watts_app] ||= self
+				res = resource_class.new env
 				res.send(rm, *args)
 			else
 				Errors[404]
@@ -201,7 +206,7 @@ module Watts
 	# (for OPTIONS) manually.  Have a look at the README and doc/examples.
 	class Resource
 		HTTPMethods =
-			[:get, :post, :put, :delete, :head, :options, :trace, :connect]
+			Set.new([:get, :post, :put, :delete, :head, :options, :trace, :connect])
 
 		class << self
 			attr_new Array, :http_methods
@@ -276,7 +281,6 @@ module Watts
 				self.app = app
 			end
 			self.env = env
-			self.response = Rack::Response.new
 		end
 
 		# The default options method, to comply with RFC 2616, returns a list
