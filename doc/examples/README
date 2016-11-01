@@ -1,5 +1,5 @@
 All of the examples are standalone Watts applications, which you can run
-directly.  To run them, you can use the command.
+directly.  To run them, you can use the command:
 	rackup file.ru
 
 * hello_world.ru is the most basic demonstration.
