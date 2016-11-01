@@ -55,5 +55,8 @@ task(:irb) {
 desc "Runs tests."
 task(:test) {
 	tests = Dir['test/*_test.rb'].map { |t| "-r#{t}" }
+	if ENV['COVERAGE']
+		tests.unshift "-rtest/coverage"
+	end
 	system 'ruby', '-Ilib', '-I.', *tests, '-e', ''
 }
