@@ -5,6 +5,8 @@ Watts is a minimalist, Rack-based, resource-oriented web framework.  It
 has fewer than 400 lines of code (including comments), no dependencies
 (besides Rack), and only does one thing: it maps resources.
 
+See doc/LICENSE for the license.  See doc/examples if you're impatient.
+
 ## Goals
 Dead-simple web development.  I don't want a framework to take up so
 much of my brain that there's no space left for my application.
@@ -88,6 +90,7 @@ Also:  joules per second.
 
 The Watts in question:
 
+```
 ░░░█░░██▒█░░█░░
 ░░█▒██▓█▒▓██▒█░
 ░█▒██▓▓█▒▓▓██▒█
@@ -104,6 +107,7 @@ The Watts in question:
 ░░░█▓▓▓▓█▓▓█░░░
 ░░░░█▓▓▓███░░░░
 ░░████████████░
+```
 
 ## Author
 Pete Elmore.  Feel free to email me using pete at debu dot gs.  I'm on
@@ -123,6 +127,3 @@ have been provided by friends and coworkers:
 And, as with Hoshi ( http://github.com/pete/hoshi ), I think I'll continue the
 tradition of crediting the music I was blasting while writing out the first
 draft:  Softball and Dance☆Man.
-
-## Licensing
-See doc/LICENSE for the specifics.
