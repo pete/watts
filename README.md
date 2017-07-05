@@ -8,10 +8,12 @@ has fewer than 400 lines of code (including comments), no dependencies
 See doc/LICENSE for the license.  See doc/examples if you're impatient.
 
 ## Goals
+
 Dead-simple web development.  I don't want a framework to take up so
 much of my brain that there's no space left for my application.
 
 ## Resource Orientation
+
 If you think of resources as first-class objects, and then think of HTTP
 methods as operations on those objects, then this should probably make
 sense.
@@ -25,44 +27,47 @@ resource's GET does this, and its POST does that, ...".
 And because the second one made more sense to me, that's how I wrote
 Watts.  Let me clarify if that was a bit vague, by showing how a Watts
 app comes into being:
-* You make a resource by sub-classing Watts::Resource.  
+* You make a resource by sub-classing `Watts::Resource`.  
 * On this resource, you define some basic operations, in terms of HTTP
 methods.
-* You create an app by sub-classing Watts::App.
+* You create an app by sub-classing `Watts::App`.
 * You use the resource() method to tell Watts the path under which the
 resource can be found.
 
 There are a few easy-to-read examples in doc/examples.
 
 ## Pattern-matching
+
 That resource() method mentioned above?  It does some pattern-matching
 on the different components of the path.  They all arrive as strings, of
 course.  The priority for matches is that Watts will attempt to match a
 string literally if possible.  Next it tries to match any regex patterns
 that have been specified, and failing that, symbols are used as a
 catch-all.  Here are a few patterns and the things they match:
-* '' matches '/'
-* 'foo' matches '/foo'.
-* 'foo/bar' matches '/foo/bar'.
-* [] matches '/'.
-* ['foo'] matches '/foo'.
-* ['foo', 'bar'] matches '/foo/bar'.
-* ['foo', /^[0-9+]$/] matches '/foo/', followed by a string of digits.
+* `''` matches `/`
+* `'foo'` matches `/foo`.
+* `'foo/bar'` matches `/foo/bar`.
+* `[]` matches `/`.
+* `['foo']` matches `/foo`.
+* `['foo', 'bar']` matches `/foo/bar`.
+* `['foo', /^[0-9+]$/]` matches `/foo/`, followed by a string of digits.
 The matching part of the path will be passed as an argument to the
 method on the resource when it is called.
-* ['foo', :arg] matches '/foo/' followed by anything.  Like with the
+* `['foo', :arg]` matches `/foo/` followed by anything.  Like with the
 regex, the argument is passed in.  The symbol's actual value doesn't
 really matter to Watts; it is intended for documentation.
 
 ## REST, RFC 2616, TL;DR
+
 There's a lot of talk on the internets about what exactly REST is, why it's
 important, why we're doing it wrong, content-negotiation, discoverability,
 avoiding out-of-band communication, and all of that stuff.  Watts makes it a
 little easier to comply with the spec than Rails or Sinatra if you know what the
-spec says, but it doesn't get all in your face about that stuff if you don't
-care.  (You should definitely care, but Watts won't make you.)
+spec says, but it doesn't force it on you.  (You should definitely care, but
+Watts won't make you.)
 
 ## Design
+
 Lots of web frameworks move very quickly, have a large number of features, a
 large number of bugs resulting from the large number of features, and an onerous
 upgrade process when updating to a new version.  Watts has a much more
@@ -79,10 +84,14 @@ If you feel that Watts sorely misses some features, the codebase is very small,
 and as a result very amenable to extension.
 
 ## Bugs
+
 I'm sure they're present.  You can email me about them, or ping me on
 GitHub, or send a patch.
 
+There do not seem to be too many.  There is a test suite.
+
 ## About the Name
+
 I named it after a character in a video game that I liked as a kid (and still
 like).  It's also the name of a city not far from where I live.
 
@@ -90,7 +99,7 @@ Also:  joules per second.
 
 The Watts in question:
 
-```
+
 ░░░█░░██▒█░░█░░
 ░░█▒██▓█▒▓██▒█░
 ░█▒██▓▓█▒▓▓██▒█
@@ -107,9 +116,10 @@ The Watts in question:
 ░░░█▓▓▓▓█▓▓█░░░
 ░░░░█▓▓▓███░░░░
 ░░████████████░
-```
+
 
 ## Author
+
 Pete Elmore.  Feel free to email me using pete at debu dot gs.  I'm on
 GitHub at http://github.com/pete .  Also there's http://debu.gs/ , which
 runs Watts.
