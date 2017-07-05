@@ -213,7 +213,7 @@ module Watts
 	# (for OPTIONS) manually.  Have a look at the README and doc/examples.
 	class Resource
 		HTTPMethods =
-			Set.new([:get, :post, :put, :delete, :head, :options, :trace, :connect])
+			Set.new(%i(get post put delete head options trace connect))
 
 		class << self
 			attr_new Array, :http_methods
