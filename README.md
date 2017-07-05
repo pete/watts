@@ -99,7 +99,7 @@ Also:  joules per second.
 
 The Watts in question:
 
-
+```
 ░░░█░░██▒█░░█░░
 ░░█▒██▓█▒▓██▒█░
 ░█▒██▓▓█▒▓▓██▒█
@@ -116,6 +116,7 @@ The Watts in question:
 ░░░█▓▓▓▓█▓▓█░░░
 ░░░░█▓▓▓███░░░░
 ░░████████████░
+```
 
 
 ## Author
