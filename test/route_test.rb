@@ -27,6 +27,7 @@ class RouteTest < Test::Unit::TestCase
 		assert_equal [r[2], ['two']], app.match('/one/two')
 		assert_equal [r[3], ['two', 'three']], app.match('/one/two/three')
 		assert_equal [r[4], ['two', 'three']], app.match('/one/two/three/4')
+		assert_equal [r[5], ['tu', 'faib']], app.match('/one/tu/faib')
 		assert_nil app.match('/one/two/three/four')
 		assert_nil app.match('Just some random gibberish.  Bad client!')
 
@@ -37,6 +38,7 @@ class RouteTest < Test::Unit::TestCase
 		assert_equal '/one/2/three', app.path_to(r[3], '2', 'three')
 		assert_equal '/one/2/3three3', app.path_to(r[3], '2', '3three3')
 		assert_equal '/one/2/3three/4', app.path_to(r[4], '2', '3three')
+		assert_equal '/one/tu/faib', app.path_to(r[5], 'tu', 'faib')
 
 		assert_equal nil, app.path_to(r[3])
 		assert_equal nil, app.path_to(r[3], '2', '3')
