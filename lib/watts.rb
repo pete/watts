@@ -97,7 +97,7 @@ module Watts
 		def self.decypher_path p
 			return p if p.kind_of?(Array)
 			return [] if ESet.include?(p)
-			return [p] if p.kind_of?(Regexp)
+			return [p] if p.kind_of?(Regexp) || p.kind_of?(Symbol)
 			p.split('/').tap { |a| a.reject!(&''.method(:'==')) }
  		end
 
