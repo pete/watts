@@ -98,7 +98,7 @@ module Watts
 			return p if p.kind_of?(Array)
 			return [] if ESet.include?(p)
 			return [p] if p.kind_of?(Regexp) || p.kind_of?(Symbol)
-			p.split('/').tap { |a| a.reject!(&''.method(:'==')) }
+			p.split('/').tap { |a| a.reject! { |c| '' == c } } #(&''.method(:'==')) }
  		end
 
 		to_instance :path_map, :decypher_path, :path_to
@@ -173,14 +173,10 @@ module Watts
 
 			req_path ||= decypher_path env['PATH_INFO']
 			resource_class, args = path_map.match req_path, []
+			return Errors[404] unless resource_class
 
-			if resource_class
-				env[:watts_app] ||= self
-				res = resource_class.new env
-				res.send(rm, *args)
-			else
-				Errors[404]
-			end
+			res = resource_class.new env, self
+			res.send(rm, *args)
 		end
 	end
 
@@ -285,11 +281,8 @@ module Watts
 		attr_accessor :env, :app
 
 		# Every resource, on being instantiated, is given the Rack env.
-		def initialize(env)
-			if app = env.delete(:watts_app)
-				self.app = app
-			end
-			self.env = env
+		def initialize(env, app = nil)
+			@env, @app = env, app
 		end
 
 		# The default options method, to comply with RFC 2616, returns a list
