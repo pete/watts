@@ -211,9 +211,11 @@ module Watts
 		HTTPMethods =
 			Set.new(%i(get post put delete head options trace connect))
 
-		class << self
-			attr_new Array, :http_methods
+		class << self; attr_accessor :http_methods; end
+		def self.inherited base
+			base.http_methods = (http_methods || []).dup
 		end
+		
 
 		# For each method allowed by HTTP, we define a "Method not allowed"
 		# response, and a method for generating a method.  You may also just

@@ -39,5 +39,11 @@ class MethodsTest < Test::Unit::TestCase
 		assert resp[1]['Allow'], "Should have an Allow: header."
 		assert_equal %w(GET HEAD), resp[1]['Allow'].split(/, */).sort,
 			"Should specify that only GET and HEAD are allowed."
+
+		rp = Class.new(r)
+		resp = r.new({}).options
+		respp = r.new({}).options
+		assert_equal resp, respp,
+			"Subclasses should inherit Allow: values."
 	end
 end
