@@ -236,6 +236,8 @@ module Watts
 					end
 
 					# TODO:  Problems.
+					content_type=response.header['Content-Type'] || 'text/html;charset=utf8' 
+					
 					case resp
 					when nil
 						response
@@ -245,7 +247,7 @@ module Watts
 						resp = resp.to_s
 						[
 							200,
-							{'Content-Type' => 'text/plain',
+							{'Content-Type' => >content_type  #'text/plain',
 							 'Content-Length' => resp.bytesize.to_s,
 							},
 							[resp]
