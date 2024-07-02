@@ -215,7 +215,6 @@ module Watts
 		def self.inherited base
 			base.http_methods = (http_methods || []).dup
 		end
-		
 
 		# For each method allowed by HTTP, we define a "Method not allowed"
 		# response, and a method for generating a method.  You may also just
@@ -238,7 +237,7 @@ module Watts
 					# TODO:  Problems.
 					case resp
 					when nil
-						response
+						response.to_a
 					when Array, Rack::Response
 						resp
 					else
