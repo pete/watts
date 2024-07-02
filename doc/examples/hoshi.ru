@@ -22,7 +22,7 @@ class HelloHTML < Watts::App
 
 	Res = Watts::Resource.for_html_view(View, :hello)
 
-	resource('/', Res)
+	res('/', Res)
 end
 
 app = HelloHTML.new

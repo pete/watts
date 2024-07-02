@@ -9,7 +9,7 @@ class Simple < Watts::App
 		get { "Hello, World!\n" }
 	end
 
-	resource('/', EZResource)
+	res('/', EZResource)
 end
 
 app = Simple.new

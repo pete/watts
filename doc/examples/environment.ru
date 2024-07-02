@@ -24,10 +24,10 @@ class WattsEnvironment < Watts::App
 		}
 	end
 
-	resource('/', EnvPrinter) {
-		resource('foo', EnvPrinter)
-		resource([:yeah], EnvPrinter)
-		resource('query', Queries)
+	res('/', EnvPrinter) {
+		res('foo', EnvPrinter)
+		res([:yeah], EnvPrinter)
+		res('query', Queries)
 	}
 end
 

@@ -35,22 +35,22 @@ class MatchingDemo < Watts::App
 		get { |n| "0x" + fib(n.to_i(16)).to_s(16) + "\n" }
 	end
 
-	resource('/') {
+	res('/') {
 		# A symbol can be used to indicate an 'argument' component of a path,
 		# which is in turn passed to the resource's method as paths.  It will
 		# match anything, making it almost equivalent to just using an empty
 		# regex (see below), except that it can serve as documentation.
-		resource(['strlen', :str], Strlen)
+		res(['strlen', :str], Strlen)
 
-		resource('fib') {
+		res('fib') {
 			# You can match arguments based on a regex.  The path component for
 			# the regex is passed to the resource's method as part of the
 			# argument list.
-			resource([/^[0-9]+$/], Fibonacci)
+			res([/^[0-9]+$/], Fibonacci)
 
 			# As above, but here we use hexadecimal.  If the pattern for
 			# Fibonacci doesn't match, then we'll end up hitting this one.
-			resource([/^(0x)?[0-9a-f]+$/i], HexFibonacci)
+			res([/^(0x)?[0-9a-f]+$/i], HexFibonacci)
 		}
 	}
 end
