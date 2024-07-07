@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 # An illustration of the pattern-matching capabilities of Watts.  Some URLs to
 # try if you start this one up:
-# 	http://localhost:8080/strlen/foo (Which should tell you '3'.)
-# 	http://localhost:8080/fib/15 (Which should give you 987.)
-# 	http://localhost:8080/fib/foo (Which is a 404.  'foo' isn't a number!)
-# 	http://localhost:8080/fib/f (Which should give you 0x3db.)
-# 	http://localhost:8080/fib/0x15 (Which should give you 0x452f.)
+# 	http://localhost:9292/strlen/foo (Which should tell you '3'.)
+# 	http://localhost:9292/fib/15 (Which should give you 987.)
+# 	http://localhost:9292/fib/foo (Which is a 404.  'foo' isn't a number!)
+# 	http://localhost:9292/fib/f (Which should give you 0x3db.)
+# 	http://localhost:9292/fib/0x15 (Which should give you 0x452f.)
 
 require 'watts'
 

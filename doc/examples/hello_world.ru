@@ -1,6 +1,6 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env rackup
 # This is, I think, the simplest possible Watts application.  It starts up Rack
-# on port 8080 and responds only to GET /.
+# on port 9292 and responds only to GET /.
 
 require 'watts'
 

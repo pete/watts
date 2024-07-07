@@ -1,3 +1,4 @@
+#!/usr/bin/env rackup
 # This example gives you a feel for the environment in which Watts::Resources
 # run.  By "environment", of course, I really just mean that the 'env' value
 # Rack gives you on requests is accessible from inside your resources.  You can

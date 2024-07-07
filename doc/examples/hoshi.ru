@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env rackup
 # An example illustrating how to use the for_html_view method, with help from
 # Hoshi.  Try running this and opening http://localhost:8080/ in a browser.
 
@@ -7,7 +7,7 @@ require 'hoshi'
 
 class HelloHTML < Watts::App
 	# First, a simple, traditional greeting, done in Hoshi:
-	class View < Hoshi::View :html4
+	class View < Hoshi::View :html5
 		def hello
 			doc {
 				head { title 'Hello, World!' }

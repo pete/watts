@@ -191,25 +191,25 @@ module Watts
 	# 
 	# Or you could do something odd like this:
 	# 	class RTime < Watts::Resource
-	#		class << self; attr_accessor :last_post_time; end
-	#
+	# 		class << self; attr_accessor :last_post_time; end
+	# 
 	# 		get { || "The last POST was #{last_post_time}." }
 	# 		post { ||
 	# 			self.class.last_post_time = Time.now.strftime('%F %R')
-	#			[204, {}, []]
-	#		}
-	#
-	#		def last_post_time
-	#			self.class.last_post_time || "...never"
-	#		end
-	#	end
+	# 			[204, {}, []]
+	# 		}
 	# 
-	# It is also possible to define methods in the usual way (e.g., 'def get
-	# ...'), although you'll need to add them to the list of allowed methods
+	# 		def last_post_time
+	# 			self.class.last_post_time || "...never"
+	# 		end
+	# 	end
+	# 
+	# It is also possible to define methods in the usual way (e.g., `def get
+	# ...`), although you'll need to add them to the list of allowed methods
 	# (for OPTIONS) manually.  Have a look at the README and doc/examples.
 	class Resource
 		HTTPMethods =
-			Set.new(%i(get post put delete head options trace connect))
+			Set.new(%i(get post put patch delete head options trace connect))
 
 		class << self; attr_accessor :http_methods; end
 		def self.inherited base
@@ -238,8 +238,10 @@ module Watts
 					case resp
 					when nil
 						response.to_a
-					when Array, Rack::Response
+					when Array
 						resp
+					when Rack::Response
+						resp.to_a
 					else
 						resp = resp.to_s
 						[

@@ -6,6 +6,7 @@ directly.  To run them, you can use the command:
 * matching.ru shows how Watts's pattern-matching works.
 * hoshi.ru is a demonstration of the view-wrapping resource.
 * environment.ru shows what you have to work with in your request.
+* return.ru demonstrates how Watts handles the return value.
 
 Although they're all single-file applications, there's nothing that
 prevents you from splitting things up arbitrarily.  It's all just Ruby.
