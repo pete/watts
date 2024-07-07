@@ -12,7 +12,6 @@ spec = Gem::Specification.new { |s|
 		/\/rdoc(\/|$)/i.match f
 	} + %w(Rakefile)
 	s.require_path = 'lib'
-	s.has_rdoc = true
 	s.extra_rdoc_files = Dir['doc/*'].select(&File.method(:file?))
 	s.extensions << 'ext/extconf.rb' if File.exist? 'ext/extconf.rb'
 	Dir['bin/*'].map(&File.method(:basename)).map(&s.executables.method(:<<))
@@ -45,7 +44,7 @@ task(:clean) {
 desc "Builds and installs the gem for #{spec.name}"
 task(:install => :package) { 
 	g = "pkg/#{spec.name}-#{spec.version}.gem"
-	system "sudo gem install -l #{g}"
+	system "gem install -l #{g}"
 }
 
 desc "Runs IRB, automatically require()ing #{spec.name}."
