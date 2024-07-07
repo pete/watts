@@ -75,7 +75,19 @@ does not exist, and that response will be used if the return value is nil.
 
 The Rack API has changed a handful of times recently, so see SPEC.rdoc in
 the Rack repo or use ri(1) or on the web:
-https://github.com/rack/rack/blob/main/SPEC.rdoc#label-The+Response
+https://github.com/rack/rack/blob/main/SPEC.rdoc#label-The+Response .
+
+Note also that, although HTTP headers are case-insensitive,
+`Rack::Lint` has started throwing errors if you use the canonical case
+(e.g., "User-Agent", "Content-Type") rather than all lower-case (e.g.,
+"user-agent", "content-type").  The canonical case for HTTP headers is
+used in the RFCs, in nearly every web server and user agent since the
+1990s, as well as all of the documentation, including the IANA's
+header registry:  http://www.iana.org/assignments/message-headers .
+As Watts is designed to work with Rack, though, Watts now emits only
+lower-case header names in the few places where it does emit headers.
+
+`Rack::Lint` is of dubious utility and can be disabled without consequence.
 
 See doc/examples/return.ru.
 

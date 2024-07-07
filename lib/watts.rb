@@ -67,11 +67,11 @@ module Watts
 	class App
 		Errors = {
 			400 =>
-				[400, {'Content-Type' => 'text/plain'}, ["400 Bad Request.\n"]],
+				[400, {'content-type' => 'text/plain'}, ["400 Bad Request.\n"]],
 			404 =>
-				[404, {'Content-Type' => 'text/plain'}, ["404 Not Found\n"]],
+				[404, {'content-type' => 'text/plain'}, ["404 Not Found\n"]],
 			501 =>
-				[501, {'Content-Type' => 'text/plain'},
+				[501, {'content-type' => 'text/plain'},
 					["501 Not Implemented.\n"]],
 		}
 
@@ -209,7 +209,7 @@ module Watts
 	# (for OPTIONS) manually.  Have a look at the README and doc/examples.
 	class Resource
 		HTTPMethods =
-			Set.new(%i(get post put patch delete head options trace connect))
+			Set.new(%i(get post put delete head options trace connect patch))
 
 		class << self; attr_accessor :http_methods; end
 		def self.inherited base
@@ -246,8 +246,8 @@ module Watts
 						resp = resp.to_s
 						[
 							200,
-							{'Content-Type' => 'text/plain',
-							 'Content-Length' => resp.bytesize.to_s,
+							{'content-type' => 'text/plain',
+							 'content-length' => resp.bytesize.to_s,
 							},
 							[resp]
 						]
@@ -295,9 +295,9 @@ module Watts
 			[
 				200,
 				{
-					'Content-Length' => '0', # cf. RFC 2616
-					'Content-Type' => 'text/plain', # Appease Rack::Lint
-					'Allow' => http_methods.join(', ')
+					'content-length' => '0', # cf. RFC 2616
+					'content-type' => 'text/plain', # Appease Rack::Lint
+					'allow' => http_methods.join(', ')
 				},
 				[]
 			]
@@ -312,9 +312,9 @@ module Watts
 		def default_http_method(*args)
 			s = 'Method not allowed.'
 			[405,
-				{ 'Allow' => http_methods.join(', '),
-				  'Content-Type' => 'text/plain',
-				  'Content-Length' => s.bytesize.to_s,
+				{ 'allow' => http_methods.join(', '),
+				  'content-type' => 'text/plain',
+				  'content-length' => s.bytesize.to_s,
 				},
 				['Method not allowed.']]
 		end
@@ -329,6 +329,8 @@ module Watts
 	end
 
 	# See the documentation for Watts::Resource.for_html_view().
+	# Semi-deprecated:  I don't use this anywhere besides my blog, and I don't
+	# think anyone else uses it.
 	class HTMLViewResource < Resource
 		class << self
 			attr_writer :view_class, :view_method
@@ -347,8 +349,8 @@ module Watts
 		def get *args
 			body = view_class.new.send(view_method, *args)
 			[200,
-				{'Content-Type' => 'text/html',
-				 'Content-Length' => body.bytesize.to_s},
+				{'content-type' => 'text/html',
+				 'content-length' => body.bytesize.to_s},
 			 [body]]
 		end
 	end
