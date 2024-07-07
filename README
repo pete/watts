@@ -51,12 +51,35 @@ catch-all.  Here are a few patterns and the things they match:
 * [] matches "/".
 * ['foo'] matches "/foo".
 * ['foo', 'bar'] matches "/foo/bar".
-* ['foo', /^[0-9+]$/] matches "/foo/", followed by a string of digits.
+* ['foo', /^[0-9]+$/] matches "/foo/", followed by a string of digits.
 The matching part of the path will be passed as an argument to the
 method on the resource when it is called.
 * ['foo', :arg] matches "/foo/" followed by anything.  Like with the
 regex, the argument is passed in.  The symbol's actual value doesn't
 really matter to Watts; it is intended for documentation.
+
+See doc/examples/matching.ru.
+
+## What methods return:
+
+When you define an HTTP method on a `Watts::Resource`, the best thing
+to return is an array in the format Rack expects for responses, namely:
+
+ [status_code, {headers}, [body, ...]]
+
+For the sake of convenience, Watts will attempt to do the right thing
+if you return a bare string (in which case, it is treated as `text/plain`).
+If the return value is a `Rack::Response`, then Watts will use that.  If you
+call `Watts::Resource#response`, a `Rack::Response` will be created if it
+does not exist, and that response will be used if the return value is nil.
+
+The Rack API has changed a handful of times recently, so see SPEC.rdoc in
+the Rack repo or use ri(1) or on the web:
+https://github.com/rack/rack/blob/main/SPEC.rdoc#label-The+Response
+
+See doc/examples/return.ru.
+
+* A string, in which case, 
 
 ## REST, RFC 2616, TL;DR
 
